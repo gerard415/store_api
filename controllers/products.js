@@ -10,6 +10,7 @@ const getAllproducts = async (req, res)=>{
     const { featured, company, name, sort, fields } = req.query;
     const queryObject = {} //creating a new object
 
+    //filtering
     if (featured) {
         queryObject.featured = featured === 'true' ? true : false; //turning operator which means that if featured is true then equate it to true else equate it to false
     }
@@ -37,6 +38,12 @@ const getAllproducts = async (req, res)=>{
         const fieldsList = fields.split(',').join(' ')
         result = result.select(fieldsList)
     }
+
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || 10
+    const skip = (page - 1) * limit
+
+    result = result.skip(skip).limit(limit)
 
     const products = await result
     res.status(200).json({products, nbHits: products.length} )
