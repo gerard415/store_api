@@ -1,17 +1,13 @@
 const getAllproductsStatic = async (req, res)=>{
-    try {
-        res.status(200).json({msg:"get all products staic"})
-    } catch (error) {
-        res.send(error)
-    }
+    throw new Error('testing async errors')
+    res.status(200).json({msg:"get all products static"})
+
 }
 
 const getAllproducts = async (req, res)=>{
-    try {
-        res.status(200).json({msg:"get all products"})
-    } catch (error) {
-        res.send(error)
-    }
+    throw new Error('testing async errors')
+    res.status(200).json({msg:"get all products"})
+
 }
 
 module.exports = {
