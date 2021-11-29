@@ -7,7 +7,7 @@ const getAllproductsStatic = async (req, res)=>{
 }
 
 const getAllproducts = async (req, res)=>{
-    const { featured, company, name, sort } = req.query;
+    const { featured, company, name, sort, fields } = req.query;
     const queryObject = {} //creating a new object
 
     if (featured) {
@@ -22,12 +22,20 @@ const getAllproducts = async (req, res)=>{
 
     // find the queryObject and equate it to result, if sort is provided then sort 
     let result = productModel.find(queryObject)
+
+    //sort
     if(sort){
-        const sortList = sort.split(',').join('')
+        const sortList = sort.split(',').join(' ')
         result = result.sort(sortList)
     }
     else{
         result = result.sort('createAt')
+    }
+    
+    //fields
+    if(fields){
+        const fieldsList = fields.split(',').join(' ')
+        result = result.select(fieldsList)
     }
 
     const products = await result
